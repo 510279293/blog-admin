@@ -1,0 +1,21 @@
+.home_top{
+  width:100%;
+  height: 50px;
+  background: #001529;
+  color:#fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .moveBox{
+    width: calc(100vw - 160px);
+    display: flex;
+    align-items: center;
+  }
+  .right{
+    width: 120px;
+    a{
+      display: inline-block;
+      height:50px;
+    }
+  }
+}

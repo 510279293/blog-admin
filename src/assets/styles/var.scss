@@ -1,0 +1,8 @@
+$red: red;
+$blue:#1890ff;
+
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

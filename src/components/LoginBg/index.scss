@@ -1,0 +1,13 @@
+.long_bg{
+  position: relative;
+  background:linear-gradient(90deg,#041315 0%,#0F3F41 100%);
+  overflow: hidden;
+  width:100vw;
+  height:100vh;
+  .posi{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-200px);
+    top: 36vh;
+  }
+}

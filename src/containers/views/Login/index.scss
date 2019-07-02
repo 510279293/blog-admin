@@ -1,0 +1,15 @@
+@import 'var.scss';
+
+.login_form{
+  margin: 0 auto;
+  width: 360px;
+  .color_blue{
+    color: $blue;
+  }
+  .login_form_forgot{
+    float:right;
+  }
+  .login_form_button{
+    width:100%;
+  }
+}
