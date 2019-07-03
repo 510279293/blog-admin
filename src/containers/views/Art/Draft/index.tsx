@@ -4,7 +4,7 @@ import * as styles from './index.scss'
 
 class ArtDraft extends ComponentExt{
   render(){
-    return(<div>
+    return(<div className={`${styles['draft-test']} ${styles['ff-f']}`}>
       ArtDraft
     </div>)
   }
