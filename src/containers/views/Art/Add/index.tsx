@@ -3,13 +3,9 @@ import {ComponentExt} from '@utils/reactExt'
 import * as styles from './index.scss'
 import { Form, Icon, Input, Button, Checkbox, Select } from 'antd'
 import Editor from '@components/markdown'
-
+import {addArt,tagList,artList} from '@api/index'
+import {getUrlParams} from '@utils/util.js'
 const { Option } = Select
-const children = []
-
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>)
-}
 
 let eTimer = null
 class ArtAdd extends ComponentExt{
@@ -17,36 +13,65 @@ class ArtAdd extends ComponentExt{
     super(props)
     this.state={
       content: '',
-      title: '',
-      descript: '',
       editContent: '',
-      keyword: ''
+      tagsArr: [],
     }
+    this._editorChange = this._editorChange.bind(this)
   }
-  _editorChange(content, outcontent) {
-    clearInterval(eTimer)
-    eTimer = setTimeout(()=> {
-      this.setState({
-        content: content,
-        editContent: outcontent
-      })
-    }, 60)
+  async componentDidMount(){
+    let search = this.props.location.search
+    let artId = getUrlParams(search, 'artId')
+    if(artId){
+      const {res} = await artList({id:artId})
+    }
+    this.getTagList({})
   }
-  componentDidMount(){}
-  handleSubmit = e => {
-    e.preventDefault()
+  async getTagList(params?:object) {
+    const {res} = await tagList(params)
+    this.setState({tagsArr: res.data})
+  }
+  _editorChange(content:string, outcontent:string) {
+    this.setState({
+      content: content,
+      editContent: outcontent
+    })
+  }
+  async toAddArt(params:object){
+    const {res} = await addArt(params)
+    console.log(res)
+    res.success ? this.$message.success('新增文章成功') : this.$message.error('新增文章失败')
+  }
+  submitForm(params:object){
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
+        let newParams = Object.assign(params,values)
+        newParams.tags = newParams.tags.join(',')
+        this.toAddArt(newParams)
       }
     })
   }
+  handleSubmit = (str:string) => {
+    let params = {}
+    if(str == 'draft'){
+      params.isdraft = true
+    }else{
+      params.isdraft = false
+    }
+    Object.assign(params,this.state)
+    this.submitForm(params)
+  }
   render(){
     const { getFieldDecorator } = this.props.form
+    const tagsArr = this.state.tagsArr
+    const tagsOption = []
+    tagsArr.map((v:object,i:number) => {
+      tagsOption.push(<Option key={v.id}>{v.name}</Option>)
+    })
     return(<div className={styles.artAdd}>
         <Form onSubmit={this.handleSubmit} className={styles.login_form}>
         <Form.Item>
-          {getFieldDecorator('artTitle', {
+          {getFieldDecorator('title', {
             rules: [{ required: true, message: '请输入标题!' }],
           })(
             <Input
@@ -55,7 +80,7 @@ class ArtAdd extends ComponentExt{
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('artDesc', {
+          {getFieldDecorator('desc', {
             rules: [{ required: true, message: '请输入描述!' }],
           })(
             <Input
@@ -73,19 +98,23 @@ class ArtAdd extends ComponentExt{
           )}
         </Form.Item>
         <Form.Item>
-          <Select
-            mode="multiple"
-            placeholder="选择一个标签吧"
-            defaultValue={['a10', 'c12']}
-            style={{ width: '100%' }}
-          >
-            {children}
-          </Select>
+          {
+            getFieldDecorator('tags', {})(
+            <Select
+              mode="multiple"
+              placeholder="选择一个标签吧"
+              // defaultValue={['a10', 'c12']}
+              style={{ width: '100%' }}
+            >
+              {tagsOption}
+            </Select>
+            )
+          }
         </Form.Item>
         <Editor content={this.state.content} editorChange={this._editorChange} />
         <Form.Item className={styles.mar_center}>
-          <Button type="primary" htmlType="submit" className={styles.login_form_button}> 保存草稿</Button>
-          <Button type="primary" htmlType="submit" className={styles.login_form_button}> 发布文章</Button>
+          <Button type="primary" loading onClick={() => this.handleSubmit('draft')} className={styles.login_form_button}> 保存草稿</Button>
+          <Button type="primary" onClick={() => this.handleSubmit('public')} className={styles.login_form_button}> 发布文章</Button>
         </Form.Item>
       </Form>
     </div>)

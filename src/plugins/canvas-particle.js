@@ -9,7 +9,6 @@ function Dotline(option){
 		cl:'#000', //颜色
 		dis:100 //触发连线的距离
 	}, option)
-	console.log(document.getElementById(this.opt.dom))
 	this.c = document.getElementById(this.opt.dom) //canvas元素id
 	this.ctx = this.c.getContext('2d')
 	this.c.width = this.opt.cw //canvas宽

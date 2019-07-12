@@ -15,7 +15,7 @@ class Home extends ComponentExt{
       <Layout className={styles.home}>
         <Header style={{ height: '50px', padding: '0 20px', lineHeight: '50px'}}><Top /></Header>
         <Layout className={styles.warp}>
-          <Sider width={180}><HomeNav /></Sider>
+          <Sider width={180}><HomeNav {...this.props} /></Sider>
           <Content className={styles.container}>
             <div className={styles.back_f}>{this.props.children}</div>
           </Content>

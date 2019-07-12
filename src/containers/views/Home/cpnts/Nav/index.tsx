@@ -9,6 +9,8 @@ class HomeNav extends ComponentExt{
   constructor(props: any){
     super(props)
     this.state = {
+      selectedKeys: '0',
+      openKeys: 'sub0',
       menus: [
         {
           icon: "pie-chart",
@@ -20,12 +22,12 @@ class HomeNav extends ComponentExt{
             },
             {
               routeTo: '/art/add',
-              txt: "添加文章"
+              txt: "添加/修改文章"
             },
-            {
-              routeTo: '/art/draft',
-              txt: "草稿箱"
-            }
+            // {
+            //   routeTo: '/art/draft',
+            //   txt: "草稿箱"
+            // }
           ]
         },
         {
@@ -65,12 +67,26 @@ class HomeNav extends ComponentExt{
       ]
     }
   }
+  componentWillMount(){
+    let curRoute = this.props.location.pathname
+    this.state.menus.map((item:object, idx:number) => {
+      item.sub.map((sitem:object, i:number) => {
+        curRoute.includes(sitem.routeTo) ? (
+          this.setState({
+            selectedKeys: `${(idx*10+i).toString()}`,
+            openKeys: `sub${idx}`,
+          })
+          ) : null
+      })
+    })
+  }
   render(){
+    console.log(this.state)
     return(
       <div style={{ width: 180, height: "100%" }}>
         <Menu
-          defaultSelectedKeys={['0']}
-          defaultOpenKeys={['sub1']}
+          defaultSelectedKeys={[this.state.selectedKeys]}
+          defaultOpenKeys={[this.state.openKeys]}
           mode="inline"
           theme="dark"
         >
@@ -78,7 +94,7 @@ class HomeNav extends ComponentExt{
             this.state.menus.map((item: any, index: any) => {
               return (
                 <SubMenu
-                  key={`sub${index+1}`}
+                  key={`sub${index}`}
                   title={
                     <span>
                       <Icon type={item.icon} />

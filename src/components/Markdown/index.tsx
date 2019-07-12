@@ -35,14 +35,12 @@ class MdEditor extends ComponentExt{
     this.previewControl = null
   }
   render(){
-    console.log(styles)
     // const panelClass = cNames([ 'md-panel', { 'fullscreen': this.state.isFullScreen } ])
     const panelClass = `${styles['md-panel']} ${this.state.isFullScreen ? styles['fullscreen'] : ''}`
     // const editorClass = cNames([ 'md-editor', { 'expand': this.state.mode === 'edit' } ])
     const editorClass = `${styles['md-editor']} ${this.state.mode === 'edit' ? styles['expand'] : ''}`
     // const previewClass = cNames([ 'md-preview', 'markdown', { 'expand': this.state.mode === 'preview', 'shrink': this.state.mode === 'edit' } ])
     const previewClass = `${styles['md-preview']} ${styles['markdown']} ${this.state.mode === 'preview' ? styles['expand'] : ''} ${this.state.mode === 'edit' ? styles['shrink'] : ''}`
-    console.log(panelClass, editorClass, previewClass)
     return (
       <div className={panelClass}>
         <div className={styles['md-menubar']}>

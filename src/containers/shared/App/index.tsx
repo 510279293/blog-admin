@@ -9,6 +9,7 @@ const Art = loadComponent(() => import('@views/Art'))
 const ArtList = loadComponent(() => import('@views/Art/List'))
 const ArtAdd = loadComponent(() => import('@views/Art/Add'))
 const ArtDraft = loadComponent(() => import('@views/Art/Draft'))
+const ArtPre = loadComponent(() => import('@views/Art/Pre'))
 
 const Tag = loadComponent(() => import('@views/Tag'))
 const TagList = loadComponent(() => import('@views/Tag/List'))
@@ -18,6 +19,8 @@ const FeedMe = loadComponent(() => import('@views/FeedMe'))
 const Life = loadComponent(() => import('@views/Life'))
 const Page = loadComponent(() => import('@views/Page'))
 
+// test mobx
+const Counter = loadComponent(() => import('@views/Counter'))
 @hot(module)
 class App extends React.Component{
   constructor(props: any){
@@ -36,12 +39,15 @@ class App extends React.Component{
       <Router>
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/count" component={Counter} />
           <Home path="/" component={Home}>
             {/* <Route path="/art" component={Art} /> */}
             <Route path="/art/list" component={ArtList} />
             <Route path="/art/add" component={ArtAdd} />
-            <Route path="/art/draft" component={ArtDraft} />
+            {/* <Route path="/art/draft" component={ArtDraft} /> */}
             {/* <Route path="/tag" component={Tag} /> */}
+            <Route path="/art/pre" component={ArtPre} />
+
             <Route path="/tag/list" component={TagList} />
             <Route path="/tag/add" component={TagAdd} />
 

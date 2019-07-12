@@ -7,7 +7,26 @@ const styleRules = require('./rules/styleRules')
 const fileRules = require('./rules/fileRules')
 const optimization = require('./optimization')
 
+const devServer = {
+  host: '127.0.0.1',
+  port: '8000',
+  hot: true,
+  historyApiFallback: true,
+  overlay: {
+    errors: true
+  },
+  publicPath: '/',
+  proxy: {
+    '/api': {
+      target: 'http://localhost:3000',
+      pathRewrite: {'^/api' : ''},
+      changeOrigin: true
+    }
+  }
+}
+
 module.exports = {
+  devServer,
   entry: {
     app: resolve('src/index.tsx')
   },

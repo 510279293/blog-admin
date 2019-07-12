@@ -3,7 +3,7 @@ import {ComponentExt} from '@utils/reactExt'
 import LoginBg from '@components/LoginBg'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 import * as styles from './index.scss'
-
+import {login} from '@api/index'
 class LoginForm extends ComponentExt{
   constructor(props: any){
     super(props)
@@ -13,9 +13,18 @@ class LoginForm extends ComponentExt{
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-        this.props.history.push('/')
+        this.toLogin(values)
       }
     })
+  }
+
+  async toLogin(params: object) {
+    const {res} = await login({...params})
+    if(res.success){
+      this.props.history.push('/')
+    } else{
+      this.$message.error(res.message)
+    }
   }
 
   render() {
@@ -24,7 +33,7 @@ class LoginForm extends ComponentExt{
       <LoginBg>
         <Form onSubmit={this.handleSubmit} className={styles.login_form}>
         <Form.Item>
-          {getFieldDecorator('username', {
+          {getFieldDecorator('userName', {
             rules: [{ required: true, message: '请输入用户名!' }],
           })(
             <Input
