@@ -10,36 +10,43 @@ class ArtList extends ComponentExt{
     super(props)
     this.columns = [
       {
+        key: 1,
         title: '标题',
         dataIndex: 'title',
         render: text => <a href="javascript:;">{text}</a>,
       },
       {
+        key: 2,
         title: '描述',
         dataIndex: 'art_desc',
         render: text => <span>{text}</span>,
       },
       {
+        key: 3,
         title: '关键字',
         dataIndex: 'keywords',
         render: text => <span>{text}</span>,
       },
       {
+        key: 4,
         title: '标签',
         dataIndex: 'tags',
         render: text => <span>{text}</span>,
       },
       {
+        key: 5,
         title: '是否草稿',
         dataIndex: 'isdraft',
         render: text => <span>{text}</span>,
       },
       {
+        key: 6,
         title: '日期',
         dataIndex: 'create_time',
         render: text => <span>{text}</span>,
       },
       {
+        key: 7,
         title: '编辑',
         dataIndex: 'edit',
         render: (text,record) => (<div>
@@ -55,7 +62,6 @@ class ArtList extends ComponentExt{
   }
   async getArtList(params: any){
     const {res} = await artList(params)
-    console.log(res)
     this.setState({tableData: res.data})
   }
   componentDidMount(){
@@ -66,14 +72,14 @@ class ArtList extends ComponentExt{
       title: '友情提示:',
       content: '确定要删除该文章吗?',
       async onOk() {
-        const {res} = await delArt({id})
+        const {res} = await delArt({id});
+        console.log(res);
       },
       onCancel() {},
     })
   }
   render(){
-    const tableData = this.state.tableData
-    console.log(tableData)
+    const tableData = this.state.tableData;
     return(<div>
       <Table columns={this.columns} dataSource={tableData} />
     </div>)

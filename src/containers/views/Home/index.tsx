@@ -8,12 +8,17 @@ const { Header, Footer, Sider, Content } = Layout
 
 class Home extends ComponentExt{
   constructor(props: any){
-    super(props)
+    super(props);
+  }
+  logout(){
+    console.log(this,this.props)
   }
   render() {
     return (
       <Layout className={styles.home}>
-        <Header style={{ height: '50px', padding: '0 20px', lineHeight: '50px'}}><Top /></Header>
+        <Header style={{ height: '50px', padding: '0 20px', lineHeight: '50px'}}>
+          <Top userName="zqs" onMenuClick={this.logout} />
+        </Header>
         <Layout className={styles.warp}>
           <Sider width={180}><HomeNav {...this.props} /></Sider>
           <Content className={styles.container}>

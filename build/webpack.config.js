@@ -9,7 +9,7 @@ const optimization = require('./optimization')
 
 const devServer = {
   host: '127.0.0.1',
-  port: '8000',
+  port: '8888',
   hot: true,
   historyApiFallback: true,
   overlay: {

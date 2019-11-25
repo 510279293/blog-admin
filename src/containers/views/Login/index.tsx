@@ -4,6 +4,7 @@ import LoginBg from '@components/LoginBg'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 import * as styles from './index.scss'
 import {login} from '@api/index'
+
 class LoginForm extends ComponentExt{
   constructor(props: any){
     super(props)
@@ -12,8 +13,7 @@ class LoginForm extends ComponentExt{
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
-        this.toLogin(values)
+        this.toLogin(values);
       }
     })
   }
@@ -21,7 +21,7 @@ class LoginForm extends ComponentExt{
   async toLogin(params: object) {
     const {res} = await login({...params})
     if(res.success){
-      this.props.history.push('/')
+      this.props.history.push('/art/list')
     } else{
       this.$message.error(res.message)
     }
@@ -67,4 +67,4 @@ class LoginForm extends ComponentExt{
   }
 }
 const Login = Form.create({ name: 'normal_login' })(LoginForm)
-export default Login
+export default Login;

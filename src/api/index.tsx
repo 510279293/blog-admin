@@ -5,6 +5,8 @@ export const login = (params: object) => {return HttpUtil.post('/users/login', p
 // 登出
 export const logout = (params?: object) => {return HttpUtil.post('/users/logout', params)}
 
+export const getUserInfo = (params?: object) => {return HttpUtil.post('/users/info', params)}
+
 // 文章列表
 export const artList = (params?: object) => {return HttpUtil.post('/art/list', params)}
 // 新增文章

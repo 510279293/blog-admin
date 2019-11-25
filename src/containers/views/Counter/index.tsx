@@ -1,29 +1,16 @@
-import * as React from 'react'
-import {observer,inject} from 'mobx-react'
-import {hot} from 'react-hot-loader'
-import {ComponentExt} from '@utils/reactExt'
+import React from 'react';
+import AddTodo from './Todo/AddTodo';
+import VisibleTodoList from './Todo/VisibleTodoList';
+import {Provider} from 'react-redux';
+import todoApp from '@store/reducers';
+import {createStore} from 'redux';
+let store = createStore(todoApp);
 
-interface IProps{
-  globalStore?: IGlobalStore.GlobalStore
-}
+const Counter = () => (
+  <Provider store={store}>
+    <AddTodo />
+    <VisibleTodoList />
+  </Provider>
+)
 
-@hot(module)
-@inject('globalStore')
-@observer
-class Counter extends ComponentExt<IProps>{
-  increase = () => {
-    this.props.globalStore.increase(1)
-  }
-  render(){
-    const {num} = this.props.globalStore
-    return(
-      <div>
-        <div>{num}</div>
-        <button onClick={this.increase}>增加++</button>
-        <button>减少</button>
-      </div>
-    )
-  }
-}
-
-export default Counter
+export default Counter;
