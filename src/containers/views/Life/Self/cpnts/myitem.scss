@@ -1,0 +1,30 @@
+.item{
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-size: 14px;
+  padding-bottom: 10px;
+  overflow: hidden;
+  &:hover{
+    color: #6fa6e2;
+    .editIcon{
+      display: inline-block;
+    }
+    .w240{
+      // display: inline-block;
+    }
+  }
+  .w240{
+    width:240px;
+  }
+  .editIcon{
+    display: none;
+    margin-left:8px;
+    cursor: pointer;
+  }
+  i{
+    margin-right:10px;
+  }
+}

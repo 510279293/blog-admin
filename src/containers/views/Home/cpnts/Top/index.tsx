@@ -2,7 +2,6 @@ import * as React from 'react'
 import {ComponentExt} from '@utils/reactExt'
 import * as styles from './index.scss'
 import { Avatar, Menu, Dropdown, Icon } from 'antd'
-
 class Top extends ComponentExt{
   constructor(props){
     super(props);

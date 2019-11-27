@@ -1,17 +1,22 @@
 import * as React from 'react'
-import {ComponentExt} from '@utils/reactExt'
 import * as styles from './index.scss'
+import {withRouter} from 'react-router-dom'
+import {ComponentExt} from '@utils/reactExt'
 import Top from './cpnts/Top'
 import HomeNav from './cpnts/Nav'
 import { Layout } from 'antd'
+import {logout } from '@api/index';
 const { Header, Footer, Sider, Content } = Layout
-
+@withRouter
 class Home extends ComponentExt{
   constructor(props: any){
     super(props);
+    this.logout = this.logout.bind(this)
   }
   logout(){
-    console.log(this,this.props)
+    console.log(this.props)
+    this.props.history.push('/login')
+    logout();
   }
   render() {
     return (

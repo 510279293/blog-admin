@@ -1,46 +1,52 @@
 import * as React from 'react'
 import * as styles from './index.scss'
-import {Input, Icon} from 'antd'
+import MyItem from './cpnts/myItem';
+import MyUpload from '@components/Upload';
+import {connect} from 'react-redux';
+import {setUserInfo} from '@store/actions/userInfo';
 class Self extends React.Component{
-  render(){
-    const userInfo = {
+  componentDidMount(){
+    this.props.setUserInfo({
       job_desc: '2334',
       hobby: 'dsfsfer',
       quotes: '34sdfsf',
       location: 'hz',
-      sss: 'shenghuo',
-    }
+      share: 'shenghuo',
+    })
+  }
+  inputChange(type,e){
+    const { value } = e.target;
+    this.props.setUserInfo({
+      [type]: value
+    })
+  }
+  render(){
+    const {job_desc,hobby,quotes,location,share} = this.props.userInfo;
     return(<div className={styles.myinfo}>
       <dl>
-        <dt><img src="src/assets/imgs/head.jpg" /></dt>
+        <dt><MyUpload /></dt>
       </dl>
-      <div className={styles.item}><i className="iconfont iconzhiye"></i>
-      <span>{userInfo.job_desc}</span>
-      <Icon className={styles.editIcon} type="edit" theme="filled" />
-      <Input className={styles.w240} placeholder="请输入..." />
-      </div>
-      <div className={styles.item}><i className="iconfont iconlike-1"></i>
-      <span>{userInfo.hobby}</span>
-      <Icon className={styles.editIcon} type="edit" theme="filled" />
-      <Input className={styles.w240} placeholder="请输入..." />
-      </div>
-      <div className={styles.item}><i className="iconfont iconfenxiang"></i>
-      <span>{userInfo.sss}</span>
-      <Icon className={styles.editIcon} type="edit" theme="filled" />
-      <Input className={styles.w240} placeholder="请输入..." />
-      </div>
-      <div className={styles.item}><i className="iconfont iconqianming"></i>
-      <span>{userInfo.quotes}</span>
-      <Icon className={styles.editIcon} type="edit" theme="filled" />
-      <Input className={styles.w240} placeholder="请输入..." />
-      </div>
-      <div className={styles.item}><i className="iconfont iconiconfront-"></i>
-      <span>{userInfo.location}</span>
-      <Icon className={styles.editIcon} type="edit" theme="filled" />
-      <Input className={styles.w240} placeholder="请输入..." />
-      </div>
+      <MyItem iconfont="iconzhiye" value={job_desc} inputChange={this.inputChange.bind(this,'job_desc')} />
+      <MyItem iconfont="iconlike-1" value={hobby} inputChange={this.inputChange.bind(this,'hobby')} />
+      <MyItem iconfont="iconfenxiang" value={share} inputChange={this.inputChange.bind(this,'share')} />
+      <MyItem iconfont="iconqianming" value={quotes} inputChange={this.inputChange.bind(this,'quotes')} />
+      <MyItem iconfont="iconiconfront-" value={location} inputChange={this.inputChange.bind(this,'location')} />
     </div>)
   }
 }
 
-export default Self
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userInfo
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUserInfo: (users) => {
+      dispatch(setUserInfo(users))
+    } 
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Self)
