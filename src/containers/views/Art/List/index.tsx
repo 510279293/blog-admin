@@ -68,12 +68,14 @@ class ArtList extends ComponentExt{
     this.getArtList({})
   }
   del(id){
+    const _this = this;
     this.$confirm({
       title: '友情提示:',
       content: '确定要删除该文章吗?',
       async onOk() {
         const {res} = await delArt({id});
         console.log(res);
+        _this.getArtList({});
       },
       onCancel() {},
     })

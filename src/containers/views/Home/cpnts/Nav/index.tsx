@@ -59,8 +59,12 @@ class HomeNav extends ComponentExt{
           txt: "生活管理",
           sub: [
             {
-              routeTo: '/life',
+              routeTo: '/life/history',
               txt: "历史轨迹"
+            },
+            {
+              routeTo: '/life/self',
+              txt: "关于我"
             }
           ]
         }
@@ -81,7 +85,6 @@ class HomeNav extends ComponentExt{
     })
   }
   render(){
-    console.log(this.state)
     return(
       <div style={{ width: 180, height: "100%" }}>
         <Menu

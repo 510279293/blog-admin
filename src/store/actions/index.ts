@@ -20,3 +20,18 @@ export const toggleTodo = id => {
     id
   }
 }
+
+export const addList = item => {
+  //  return (dispatch, state){
+  //    return setTimeout(() => {
+  //     dispatch({
+  //       type: 'ADD_ITEM',
+  //       item,
+  //     })
+  //    },1000)
+  //  }
+  return {
+    type: 'ADD_ITEM',
+    item,
+  }
+}

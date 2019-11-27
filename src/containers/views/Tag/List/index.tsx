@@ -62,23 +62,23 @@ class TagList extends ComponentExt{
     this.backupTableData = res.data
   }
   delTheTag(id){ // 删除标签
+    let _this = this;
     this.$confirm({
       title: '友情提示:',
       content: '确定要删除该标签吗?',
       async onOk() {
         const {res} = await delTag({id})
+        _this.getTagList({})
       },
       onCancel() {},
     })
   }
   async updateTheTag(params:object){ // 修改标签
     const {res} = await updateTag(params)
-    console.log(res)
+    this.getTagList({})
   }
   save(record:object){
-    console.log(record)
     let params = {id:record.id, name: record.name, tag_desc: record.tag_desc}
-    console.log(params)
     this.updateTheTag(params)
   }
   cancel(id){

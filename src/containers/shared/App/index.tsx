@@ -17,6 +17,9 @@ const TagAdd = loadComponent(() => import('@views/Tag/Add'))
 
 const FeedMe = loadComponent(() => import('@views/FeedMe'))
 const Life = loadComponent(() => import('@views/Life'))
+const History = loadComponent(() => import('@views/Life/History'))
+const Self = loadComponent(() => import('@views/Life/Self'))
+
 const Page = loadComponent(() => import('@views/Page'))
 
 // test mobx
@@ -52,7 +55,8 @@ class App extends React.Component{
             <Route path="/tag/add" component={TagAdd} />
 
             <Route path="/feedme" component={FeedMe} />
-            <Route path="/life" component={Life} />
+            <Route path="/life/history" component={History} />
+            <Route path="/life/self" component={Self} />
           </Home>
           {/* <Route path="/home" component={Home} render={()=> (<Redirect to={this.getDefaultRoute()}/>)} /> */}
         </Switch>
