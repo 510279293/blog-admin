@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import * as styles from './index.scss'
 import { Table, Button } from 'antd'
 import {artList, delArt} from '@api/index'
-
+import moment from 'moment';
 class ArtList extends ComponentExt{
   constructor(props: any) {
     super(props)
@@ -43,7 +43,7 @@ class ArtList extends ComponentExt{
         key: 6,
         title: '日期',
         dataIndex: 'create_time',
-        render: text => <span>{text}</span>,
+        render: text => <span>{moment(new Date(text*1)).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         key: 7,
@@ -61,7 +61,7 @@ class ArtList extends ComponentExt{
     }
   }
   async getArtList(params: any){
-    const {res} = await artList(params)
+    const res = await artList(params)
     this.setState({tableData: res.data})
   }
   componentDidMount(){
@@ -73,8 +73,7 @@ class ArtList extends ComponentExt{
       title: '友情提示:',
       content: '确定要删除该文章吗?',
       async onOk() {
-        const {res} = await delArt({id});
-        console.log(res);
+        const res = await delArt({id});
         _this.getArtList({});
       },
       onCancel() {},

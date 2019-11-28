@@ -12,7 +12,7 @@ class TagAddForm extends ComponentExt{
   }
   async toAddTag(params: any){
     this.setState({btnLoading: true})
-    const {res} = await addTag(params)
+    const res = await addTag(params)
     res.success ? this.$message.success(res.message) : this.$message.error(res.message)
     this.setState({btnLoading: false})
   }

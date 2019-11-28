@@ -4,8 +4,10 @@ import HttpUtil from '../utils/request'
 export const login = (params: object) => {return HttpUtil.post('/users/login', params)}
 // 登出
 export const logout = (params?: object) => {return HttpUtil.post('/users/logout', params)}
-
+// 获取用户信息
 export const getUserInfo = (params?: object) => {return HttpUtil.post('/users/info', params)}
+// 修改用户信息
+export const updateUserInfo = (params?: object) => {return HttpUtil.post('/users/update', params)}
 
 // 文章列表
 export const artList = (params?: object) => {return HttpUtil.post('/art/list', params)}

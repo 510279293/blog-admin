@@ -4,21 +4,23 @@ import MyItem from './cpnts/myItem';
 import MyUpload from '@components/Upload';
 import {connect} from 'react-redux';
 import {setUserInfo} from '@store/actions/userInfo';
+import {updateUserInfo} from '@api/index';
 class Self extends React.Component{
-  componentDidMount(){
-    this.props.setUserInfo({
-      job_desc: '2334',
-      hobby: 'dsfsfer',
-      quotes: '34sdfsf',
-      location: 'hz',
-      share: 'shenghuo',
-    })
+  constructor(props){
+    super(props);
+    this.inputBlur = this.inputBlur.bind(this);
   }
-  inputChange(type,e){
+  componentDidMount(){
+  }
+ inputChange(type,e){
     const { value } = e.target;
     this.props.setUserInfo({
       [type]: value
     })
+  }
+  async inputBlur(){
+    // console.log(this.props)
+    const res = updateUserInfo(this.props.userInfo)
   }
   render(){
     const {job_desc,hobby,quotes,location,share} = this.props.userInfo;
@@ -26,11 +28,11 @@ class Self extends React.Component{
       <dl>
         <dt><MyUpload /></dt>
       </dl>
-      <MyItem iconfont="iconzhiye" value={job_desc} inputChange={this.inputChange.bind(this,'job_desc')} />
-      <MyItem iconfont="iconlike-1" value={hobby} inputChange={this.inputChange.bind(this,'hobby')} />
-      <MyItem iconfont="iconfenxiang" value={share} inputChange={this.inputChange.bind(this,'share')} />
-      <MyItem iconfont="iconqianming" value={quotes} inputChange={this.inputChange.bind(this,'quotes')} />
-      <MyItem iconfont="iconiconfront-" value={location} inputChange={this.inputChange.bind(this,'location')} />
+      <MyItem iconfont="iconzhiye" value={job_desc} inputChange={this.inputChange.bind(this,'job_desc')} inputBlur={this.inputBlur} />
+      <MyItem iconfont="iconlike-1" value={hobby} inputChange={this.inputChange.bind(this,'hobby')} inputBlur={this.inputBlur} />
+      <MyItem iconfont="iconfenxiang" value={share} inputChange={this.inputChange.bind(this,'share')} inputBlur={this.inputBlur} />
+      <MyItem iconfont="iconqianming" value={quotes} inputChange={this.inputChange.bind(this,'quotes')} inputBlur={this.inputBlur} />
+      <MyItem iconfont="iconiconfront-" value={location} inputChange={this.inputChange.bind(this,'location')} inputBlur={this.inputBlur} />
     </div>)
   }
 }

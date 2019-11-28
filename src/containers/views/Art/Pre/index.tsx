@@ -14,12 +14,15 @@ class ArtPre extends ComponentExt{
     let search = this.props.location.search
     let artId = getUrlParams(search, 'artId')
     if(artId){
-      const {res} = await artList({id:artId})
+      const res = await artList({id:artId})
       this.setState({
         art: res.data[0]
       })
     }
     console.log(res)
+  }
+  componentDidUpdate(){
+    window.initHtml();
   }
   render(){
     return(<div className={styles['pre_art']}>

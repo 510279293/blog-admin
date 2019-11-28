@@ -19,7 +19,7 @@ class LoginForm extends ComponentExt{
   }
 
   async toLogin(params: object) {
-    const {res} = await login({...params})
+    const res = await login({...params})
     if(res.success){
       this.props.history.push('/art/list')
     } else{

@@ -20,9 +20,10 @@ class MyItem extends React.Component{
   }
   inputBlur = () => {
     this.setStateShowInput();
+    this.props.inputBlur();
   }
   render() {
-    const {value = '', iconfont = '', inputChange} = this.props;
+    const {value = '暂无', iconfont = '', inputChange} = this.props;
     return (
       <div className={styles.item}><i className={`iconfont ${iconfont}`}></i>
         {!this.state.showInput ? 

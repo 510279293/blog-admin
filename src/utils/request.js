@@ -11,7 +11,7 @@ export default class HttpUtil {
     return new Promise((resolve, reject) => {
       instance.get(url, {...params}).then(({data}) => {
         if(data.code === successCode){
-          resolve({res: data})
+          resolve(data)
         }else{
           reject({err: data.errmsg, name: data.name||''})
         }
@@ -24,7 +24,7 @@ export default class HttpUtil {
     return new Promise((resolve,reject) => {
       instance.post(url,{...params}).then(({data}) => {
         if(data.code === successCode){
-          resolve({res: data})
+          resolve(data)
         }else{
           reject({err: data.errmsg,name: data.name||''})
         }

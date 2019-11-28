@@ -3,7 +3,7 @@ import {ComponentExt} from '@utils/reactExt'
 import * as styles from './index.scss'
 import { Form, Icon, Input, Button, Checkbox, Select } from 'antd'
 import Editor from '@components/markdown'
-import {addArt,tagList,artList} from '@api/index'
+import {addArt,tagList,artList,updateArt} from '@api/index'
 import {getUrlParams} from '@utils/util.js'
 const { Option } = Select
 
@@ -22,12 +22,31 @@ class ArtAdd extends ComponentExt{
     let search = this.props.location.search
     let artId = getUrlParams(search, 'artId')
     if(artId){
-      const {res} = await artList({id:artId})
+      const {data} = await artList({id:artId})
+      const {title,art_desc,keywords,tags,content,editContent} = data[0];
+      this.props.form.setFields({
+        title: {
+          value: title,
+        },
+        art_desc: {
+          value: art_desc,
+        },
+        keywords: {
+          value: keywords,
+        },
+        tags: {
+          value: tags.split(','),
+        },
+      })
+      this.setState({
+        content,
+        editContent,
+      })
     }
     this.getTagList({})
   }
   async getTagList(params?:object) {
-    const {res} = await tagList(params)
+    const res = await tagList(params)
     this.setState({tagsArr: res.data})
   }
   _editorChange(content:string, outcontent:string) {
@@ -37,22 +56,26 @@ class ArtAdd extends ComponentExt{
     })
   }
   async toAddArt(params:object){
-    const {res} = await addArt(params)
-    console.log(res)
+    const res = await addArt(params)
     res.success ? this.$message.success('新增文章成功') : this.$message.error('新增文章失败')
+  }
+  async toUpdateArt(params:object){
+    const res = await updateArt(params)
+    res.success ? this.$message.success('编辑文章成功') : this.$message.error('编辑文章失败')
   }
   submitForm(params:object){
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
-        let newParams = Object.assign(params,values)
-        newParams.tags = newParams.tags.join(',')
-        this.toAddArt(newParams)
+        let newParams = Object.assign({},params,values)
+        newParams.tags = newParams.tags.toString();
+        newParams.id ? this.toUpdateArt(newParams) : this.toAddArt(newParams)
       }
     })
   }
   handleSubmit = (str:string) => {
-    let params = {}
+    let search = this.props.location.search
+    let artId = getUrlParams(search, 'artId')
+    let params = artId ? {id: artId} : {};
     if(str == 'draft'){
       params.isdraft = true
     }else{
@@ -80,7 +103,7 @@ class ArtAdd extends ComponentExt{
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('desc', {
+          {getFieldDecorator('art_desc', {
             rules: [{ required: true, message: '请输入描述!' }],
           })(
             <Input

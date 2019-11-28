@@ -57,7 +57,7 @@ class TagList extends ComponentExt{
     this.getTagList({})
   }
   async getTagList(params){ // 获取标签列表
-    const {res} = await tagList(params)
+    const res = await tagList(params)
     this.setState({tableData: res.data})
     this.backupTableData = res.data
   }
@@ -67,14 +67,14 @@ class TagList extends ComponentExt{
       title: '友情提示:',
       content: '确定要删除该标签吗?',
       async onOk() {
-        const {res} = await delTag({id})
+        const res = await delTag({id})
         _this.getTagList({})
       },
       onCancel() {},
     })
   }
   async updateTheTag(params:object){ // 修改标签
-    const {res} = await updateTag(params)
+    const res = await updateTag(params)
     this.getTagList({})
   }
   save(record:object){
